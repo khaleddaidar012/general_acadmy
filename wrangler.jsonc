@@ -2,17 +2,6 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "academy-general-demo",
   "main": "custom-worker.ts",
-  "triggers": {
-    "crons": [
-      "0 * * * *"
-    ]
-  },
-  "r2_buckets": [
-    {
-      "binding": "BACKUPS",
-      "bucket_name": "academy-general-demo-backups"
-    }
-  ],
   "compatibility_date": "2026-10-01",
   "compatibility_flags": [
     "nodejs_compat",
@@ -31,7 +20,8 @@
   "vars": {
     "ACADEMY_USE_D1": "1",
     "ACADEMY_CANCEL_HOURS": "12",
-    "ACADEMY_MEETING_PROVIDER": "zoom"
+    "ACADEMY_MEETING_PROVIDER": "zoom",
+    "ACADEMY_BACKUPS_AVAILABLE": "0"
   },
   "d1_databases": [
     {

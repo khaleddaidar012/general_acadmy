@@ -1,6 +1,6 @@
 export async function register() {
   if (process.env.NEXT_RUNTIME === 'nodejs') {
-  if (process.env.ACADEMY_USE_D1 === '1') return
+  if (process.env.ACADEMY_USE_D1 === '1' || process.env.ACADEMY_BACKUPS_AVAILABLE === '0') return
   const globalState = globalThis as typeof globalThis & { academy_demoBackupTimer?: ReturnType<typeof setInterval> }
   if (globalState.academy_demoBackupTimer) return
   const { runDailyBackup } = await import('./lib/system/backups')

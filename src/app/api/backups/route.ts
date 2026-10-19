@@ -2,13 +2,17 @@ import { NextRequest, NextResponse } from 'next/server'
 import { authorize, serviceError, ServiceError } from '@/lib/system/service-http'
 import { db, rateLimit } from '@/lib/system/db'
 import { createBackup, verifyBackup } from '@/lib/system/backup-core'
-import { backupStorage, runDailyBackup } from '@/lib/system/backups'
+import { backupsAvailable, backupStorage, runDailyBackup } from '@/lib/system/backups'
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 const headers = { 'Cache-Control': 'private, no-store' }
 export async function GET(request: NextRequest) {
   try {
     const user = await authorize('backups_manage')
+    if (!backupsAvailable()) {
+      if (request.nextUrl.searchParams.get('download')) throw new ServiceError('النسخ الاحتياطي غير مفعّل مؤقتًا في نسخة العرض', 503)
+      return NextResponse.json({ available: false, enabled: false, latest: null, lastRun: null, receipt: null, warning: '' }, { headers })
+    }
     if (request.nextUrl.searchParams.get('download')) {
       const row = await db().prepare("SELECT * FROM backup_runs WHERE id=? AND status='completed'").get(request.nextUrl.searchParams.get('download')!)
       if (!row) throw new ServiceError('النسخة غير موجودة', 404)
@@ -23,12 +27,13 @@ export async function GET(request: NextRequest) {
     const latest = await db().prepare("SELECT id,created,completed,bytes,sha256 FROM backup_runs WHERE status='completed' ORDER BY completed DESC LIMIT 1").get()
     const lastRun = await db().prepare('SELECT status,created,error FROM backup_runs ORDER BY created DESC LIMIT 1').get()
     const receipt = await db().prepare('SELECT saved,backup_id FROM backup_receipts WHERE user_id=? AND device=?').get(user.id, (request.nextUrl.searchParams.get('device') || '').slice(0, 80))
-    return NextResponse.json({ enabled: setting?.value === '1', latest: latest || null, lastRun: lastRun || null, receipt: receipt || null, warning }, { headers })
+    return NextResponse.json({ available: true, enabled: setting?.value === '1', latest: latest || null, lastRun: lastRun || null, receipt: receipt || null, warning }, { headers })
   } catch (error) { return serviceError(error) }
 }
 export async function POST(request: NextRequest) {
   try {
     const user = await authorize('backups_manage', request)
+    if (!backupsAvailable()) throw new ServiceError('النسخ الاحتياطي غير مفعّل مؤقتًا في نسخة العرض', 503)
     const body = await request.json()
     if (body.action === 'toggle') {
       if (typeof body.enabled !== 'boolean') throw new ServiceError('قيمة غير صحيحة')
