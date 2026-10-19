@@ -37,7 +37,7 @@
     {
       "binding": "DB",
       "database_name": "academy-general-demo",
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      "database_id": "48c21e98-4f05-42ff-9e1b-d97768f54837",
       "migrations_dir": "migrations"
     }
   ]
