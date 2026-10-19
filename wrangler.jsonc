@@ -1,0 +1,44 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "academy-general-demo",
+  "main": "custom-worker.ts",
+  "triggers": {
+    "crons": [
+      "0 * * * *"
+    ]
+  },
+  "r2_buckets": [
+    {
+      "binding": "BACKUPS",
+      "bucket_name": "academy-general-demo-backups"
+    }
+  ],
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": [
+    "nodejs_compat",
+    "global_fetch_strictly_public"
+  ],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "services": [
+    {
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "academy-general-demo"
+    }
+  ],
+  "vars": {
+    "ACADEMY_USE_D1": "1",
+    "ACADEMY_CANCEL_HOURS": "12",
+    "ACADEMY_MEETING_PROVIDER": "zoom"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "academy-general-demo",
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations"
+    }
+  ]
+}

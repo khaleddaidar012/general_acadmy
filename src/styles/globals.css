@@ -1,0 +1,139 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   Your Academy — Design Tokens
+   ============================================ */
+:root {
+  --brand-50:  #f0f7f5;
+  --brand-100: #dbeeec;
+  --brand-200: #badfd9;
+  --brand-300: #8dc8be;
+  --brand-400: #5ba99d;
+  --brand-500: #348a7e;
+  --brand-600: #075B4A; /* Deep Islamic Green */
+  --brand-700: #064c3e;
+  --brand-800: #053d32;
+  --brand-900: #043229;
+
+  --gold-300:  #dec796;
+  --gold-400:  #d3b174;
+  --gold-500:  #C6A66B; /* Elegant Gold */
+  --gold-600:  #b08e50;
+
+  --bg-primary:    #FAF8F2; /* Warm Cream */
+  --bg-surface:    #ffffff;
+  --bg-muted:      #f3efe5;
+  --text-primary:  #26332F; /* Deep Charcoal */
+  --text-secondary:#4d5f59;
+  --text-muted:    #7b8e88;
+  --border-light:  #e7dfd1;
+
+  --radius-card: 16px;
+  --shadow-card:       0 2px 14px rgba(7, 91, 74, 0.05);
+  --shadow-card-hover: 0 10px 30px rgba(7, 91, 74, 0.12);
+  --shadow-btn:        0 4px 16px rgba(7, 91, 74, 0.25);
+}
+
+.dark {
+  --bg-primary:    #0a1614;
+  --bg-surface:    #122421;
+  --bg-muted:      #1a312d;
+  --text-primary:  #f2f7f5;
+  --text-secondary:#b2c8c2;
+  --text-muted:    #7d9891;
+  --border-light:  #1d3833;
+  --shadow-card:       0 2px 16px rgba(0, 0, 0, 0.35);
+  --shadow-card-hover: 0 10px 32px rgba(7, 91, 74, 0.3);
+}
+
+/* ============================================
+   Base Reset & Typography
+   ============================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+  max-width: 100%;
+  width: 100%;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  max-width: 100%;
+  width: 100%;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+main {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Arabic font */
+[lang="ar"] body,
+[dir="rtl"] body {
+  font-family: var(--font-cairo), sans-serif;
+}
+
+/* Latin font */
+[lang="en"] body,
+[dir="ltr"] body {
+  font-family: var(--font-inter), sans-serif;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Subtle Islamic Geometric Motif */
+.islamic-pattern {
+  background-color: transparent;
+  background-image: radial-gradient(circle at 50% 50%, rgba(198, 166, 107, 0.08) 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+}
+
+.islamic-border {
+  border: 1px solid rgba(198, 166, 107, 0.3);
+}
+
+.gold-gradient-text {
+  background: linear-gradient(135deg, #a67c33 0%, #C6A66B 50%, #dfc491 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: #C6A66B;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #075B4A;
+}
+/* Academy system controls */
+.system-input { display: block; width: 100%; padding: .7rem .9rem; border: 1px solid #d5e0da; border-radius: .8rem; margin-top: .4rem; background: white; color: #163b32; }
+.system-input:focus { outline: 2px solid #168064; outline-offset: 2px; }
+.system-button { border-radius: .8rem; padding: .7rem 1rem; background: #10634f; color: white; font-weight: 700; }
+.system-button:disabled { opacity: .55; cursor: wait; }
+.system-button:focus-visible { outline: 2px solid #168064; outline-offset: 3px; }
